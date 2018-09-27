@@ -236,4 +236,4 @@ _Pvt_Extensions
 .fake/
 
 # VS specifics configs
-.vscode
+.vscode/*
