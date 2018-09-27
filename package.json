@@ -31,5 +31,9 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.2.0",
     "webpack-hot-middleware": "^2.12.2"
+  },
+  "dependencies": {
+    "@types/knockout.validation": "0.0.36",
+    "knockout.validation": "^2.0.3"
   }
 }

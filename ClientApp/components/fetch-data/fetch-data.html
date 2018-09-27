@@ -3,7 +3,7 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <p data-bind='ifnot: forecasts'><em>Loading...</em></p>
-
+<button class="btn" data-bind="click:add">Add</button>
 <table class='table' data-bind='if: forecasts'>
     <thead>
         <tr>
@@ -11,14 +11,31 @@
             <th>Temp. (C)</th>
             <th>Temp. (F)</th>
             <th>Summary</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody data-bind='foreach: forecasts'>
         <tr>
-            <td data-bind='text: dateFormatted'></td>
-            <td data-bind='text: temperatureC'></td>
-            <td data-bind='text: temperatureF'></td>
-            <td data-bind='text: summary'></td>
+            <!-- ko ifnot: editing -->
+                <td data-bind='text: dateFormatted'></td>
+                <td data-bind='text: temperatureC'></td>
+                <td data-bind='text: temperatureF'></td>
+                <td data-bind='text: summary'></td>
+                <td>
+                    <button class="btn" data-bind="click:edit"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button class="btn" data-bind="click:remove"><span class="glyphicon glyphicon-trash red"></span></button>
+                </td>
+            <!-- /ko -->
+            <!-- ko if: editing -->
+                <td> <input class="form-control" type="text" data-bind='value: dateFormatted'></td>
+                <td> <input class="form-control" type="text" data-bind='value: temperatureC' /></td>
+                <td> <input class="form-control" type="text" data-bind='value: temperatureF' /></td>
+                <td> <input class="form-control" type="text" data-bind='value: summary' /></td>
+                <td>
+                    <button class="btn" data-bind="click:save"><span class="glyphicon glyphicon-ok"></span></button>
+                    <button class="btn" data-bind="click:cancel"><span class="glyphicon glyphicon-remove"></span></button>
+                </td>
+            <!-- /ko -->
         </tr>
     </tbody>
 </table>
