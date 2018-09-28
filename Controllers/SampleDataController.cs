@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Dynamic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
 namespace EstudoDeDotNet.Controllers
 {
     [Route("api/[controller]")]
-    public class SampleDataController : Controller
+    public class SampleDataController : BaseController
     {
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
@@ -25,13 +24,16 @@ namespace EstudoDeDotNet.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
         }
-
+        [HttpPost("[action]")]
+        public DefaultReturnObject Store([FromBody]ExpandoObject data)
+        {
+            return this.Test("Primaria","teste",data);
+        }
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }
             public int TemperatureC { get; set; }
             public string Summary { get; set; }
-
             public int TemperatureF
             {
                 get

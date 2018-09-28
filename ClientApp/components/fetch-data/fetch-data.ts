@@ -1,6 +1,8 @@
 import * as ko from 'knockout';
-import 'isomorphic-fetch';
 import 'knockout.validation';
+import 'isomorphic-fetch';
+import { Base } from '../../base';
+const base = new Base;
 
 class WeatherForecast {
     public dateFormatted: KnockoutObservable<string>;
@@ -9,9 +11,9 @@ class WeatherForecast {
     public summary: KnockoutObservable<string>;
     public editing: KnockoutObservable<boolean>;
     public test: KnockoutComputed<string>;
-    private refs:any;
+    private refs: any;
     private original: any;
-    public erros:any;
+    public erros: any;
     constructor(obj: any, editflag: boolean = false, refs: object) {
         this.original = obj;
         this.dateFormatted = ko.observable(obj.dateFormatted);
@@ -30,9 +32,17 @@ class WeatherForecast {
     }
 
     public save() {
-        console.log(JSON.parse(ko.toJSON(this)));
-        this.editing(false);
-        this.update();
+        let data = {
+            "data": "data",
+            "laza": "rento"
+        };
+        let self = this;
+        console.log(data);
+        base.post('api/SampleData/Store', data, function (resp: any) {
+            console.log(resp);
+            self.editing(false);
+            self.update();
+        });
     }
     public edit() {
         this.editing(true);
@@ -41,7 +51,7 @@ class WeatherForecast {
         this.reverse();
         this.editing(false);
     }
-    public remove(){
+    public remove() {
         this.refs.list.remove(this);
     }
     private reverse() {
@@ -68,6 +78,7 @@ class FetchDataViewModel {
                     return self.make(i, false);
                 }));
             });
+            
     }
     private make(i: any, flag: boolean) {
         return new WeatherForecast(i, flag, { list: this.forecasts });
